@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Standards & References 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+            min-height: 100vh;
+            padding: 1%;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 12px 1%;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            margin-bottom: 1%;
+        }
+        
+        h1 {
+            font-size: 18px;
+            color: #1e293b;
+            font-weight: 700;
+        }
+        
+        .year {
+            color: #3730a3;
+            font-size: 13px;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+        
+        .standards-grid {
+            display: grid;
+            gap: 1%;
+        }
+        
+        .standard-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 12px;
+            padding: 14px 1%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 5px solid transparent;
+        }
+        
+        .standard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+        
+        .standard-card.iec61850 { border-left-color: #3b82f6; }
+        .standard-card.iec104 { border-left-color: #8b5cf6; }
+        .standard-card.asnzs3000 { border-left-color: #ef4444; }
+        .standard-card.as2067 { border-left-color: #f97316; }
+        .standard-card.aemo { border-left-color: #10b981; }
+        .standard-card.dnp3 { border-left-color: #f59e0b; }
+        
+        .standard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .standard-code {
+            font-size: 16px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        
+        .standard-badge {
+            font-size: 9px;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-iec { background: #dbeafe; color: #1e40af; }
+        .badge-asnzs { background: #fee2e2; color: #dc2626; }
+        .badge-aemo { background: #d1fae5; color: #059669; }
+        .badge-dnp3 { background: #fef3c7; color: #d97706; }
+        
+        .standard-title {
+            font-size: 12px;
+            color: #475569;
+            margin-bottom: 12px;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        
+        .standard-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        
+        .standard-card.active .standard-details {
+            max-height: 2000px;
+        }
+        
+        .section {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px solid #e2e8f0;
+        }
+        
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .detail-item {
+            font-size: 11px;
+            color: #64748b;
+            padding: 5px 0;
+            line-height: 1.6;
+        }
+        
+        .detail-label {
+            font-weight: 700;
+            color: #334155;
+            display: block;
+            margin-bottom: 2px;
+        }
+        
+        .detail-text {
+            color: #475569;
+            padding-left: 8px;
+        }
+        
+        .bullet-list {
+            padding-left: 16px;
+            margin-top: 4px;
+        }
+        
+        .bullet-list li {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 4px;
+            line-height: 1.5;
+        }
+        
+        .expand-icon {
+            font-size: 14px;
+            color: #94a3b8;
+            transition: transform 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .standard-card.active .expand-icon {
+            transform: rotate(180deg);
+        }
+        
+        .highlight-box {
+            background: #f1f5f9;
+            padding: 8px;
+            border-radius: 6px;
+            margin-top: 8px;
+            border-left: 3px solid #3b82f6;
+        }
+        
+        .version-info {
+            font-size: 10px;
+            color: #64748b;
+            font-style: italic;
+            margin-top: 6px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 16px 1%;
+            margin-top: 1%;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 10px;
+            font-weight: 500;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #4338ca;
+            font-size: 9px;
+            padding: 3px 7px;
+            border-radius: 8px;
+            margin: 2px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Key Standards & References</h1>
+            <div class="year">Comprehensive 2026 Edition</div>
+        </header>
+        
+        <div class="standards-grid">
+            <!-- IEC 61850 -->
+            <div class="standard-card iec61850" onclick="toggleCard(this)">
+                <div class="standard-header">
+                    <div>
+                        <div class="standard-code">IEC 61850</div>
+                        <span class="standard-badge badge-iec">IEC International</span>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="standard-title">Communication networks and systems for power utility automation</div>
+                <div class="standard-details">
+                    <div class="section">
+                        <div class="section-title">📋 Overview</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Purpose</div>
+                            <div class="detail-text">Defines communication protocols and data models for substation automation systems (SAS), enabling interoperability between intelligent electronic devices (IEDs) from different manufacturers.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Global Significance</div>
+                            <div class="detail-text">The worldwide standard for substation automation, replacing proprietary protocols with open, standardized communication.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🔧 Key Components</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Part 7-1: Principles & Models</div>
+                            <div class="detail-text">Establishes the abstract communication service interface (ACSI) and common data classes (CDC) that form the foundation of the standard.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Part 8-1: MMS Mapping</div>
+                            <div class="detail-text">Manufacturing Message Specification (MMS) protocol mapping for real-time substation communication over TCP/IP networks.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Part 9-2: GOOSE</div>
+                            <div class="detail-text">Generic Object Oriented Substation Event - fast peer-to-peer messaging for protection and control (4ms response time).</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Part 9-3: Sampled Values</div>
+                            <div class="detail-text">Digital transmission of voltage and current measurements, enabling process bus architecture and non-conventional instrument transformers.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">💡 Key Features</div>
+                        <ul class="bullet-list">
+                            <li><strong>Self-description:</strong> IEDs can describe their capabilities and data structures automatically</li>
+                            <li><strong>Configurability:</strong> SCL (Substation Configuration Language) XML-based engineering</li>
+                            <li><strong>High-speed communication:</strong> Type 1A GOOSE messages within 3-4 milliseconds</li>
+                            <li><strong>Process bus:</strong> Merging units digitize analog signals at source</li>
+                            <li><strong>Time synchronization:</strong> IEEE 1588 PTP for microsecond accuracy</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🎯 Applications</div>
+                        <ul class="bullet-list">
+                            <li>Substation automation and protection systems</li>
+                            <li>SCADA integration and control centers</li>
+                            <li>Distributed energy resources (DER) management</li>
+                            <li>Renewable energy integration (wind farms, solar)</li>
+                            <li>Electric vehicle charging infrastructure</li>
+                            <li>Microgrid and smart grid implementations</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <div class="detail-label">Latest Edition</div>
+                        <div class="detail-text">IEC 61850 Edition 2.1 (2020) includes enhancements for data modeling, cybersecurity (IEC 62351 integration), and expanded use cases beyond substations.</div>
+                    </div>
+                    
+                    <div class="version-info">Current version supports both station bus and process bus architectures</div>
+                </div>
+            </div>
+
+            <!-- IEC 60870-5-104 -->
+            <div class="standard-card iec104" onclick="toggleCard(this)">
+                <div class="standard-header">
+                    <div>
+                        <div class="standard-code">IEC 60870-5-104</div>
+                        <span class="standard-badge badge-iec">IEC SCADA</span>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="standard-title">Telecontrol equipment and systems - Network access for IEC 60870-5-101</div>
+                <div class="standard-details">
+                    <div class="section">
+                        <div class="section-title">📋 Overview</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Purpose</div>
+                            <div class="detail-text">Extends IEC 60870-5-101 serial communication protocol to TCP/IP networks, enabling remote control and monitoring of substations and RTUs over standard IP infrastructure.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Protocol Type</div>
+                            <div class="detail-text">Master-slave architecture telecontrol protocol designed for SCADA systems, widely deployed in European and Asian power systems.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🔧 Technical Specifications</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Transport Layer</div>
+                            <div class="detail-text">TCP/IP Port 2404 (standard), providing reliable transmission with connection-oriented communication.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Data Types Supported</div>
+                            <ul class="bullet-list">
+                                <li>Single point information (SPI) - binary states</li>
+                                <li>Double point information (DPI) - 4-state values</li>
+                                <li>Measured values - normalized, scaled, short floating point</li>
+                                <li>Integrated totals - energy counters</li>
+                                <li>Commands - single/double point, setpoint, regulating</li>
+                                <li>File transfer - disturbance records, sequences of events</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Information Object Addressing</div>
+                            <div class="detail-text">Common Address (CA): 1-65535 identifying stations; Information Object Address (IOA): 1-16777215 identifying data points.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">💡 Key Features</div>
+                        <ul class="bullet-list">
+                            <li><strong>Spontaneous transmission:</strong> Event-driven reporting reduces network traffic</li>
+                            <li><strong>Clock synchronization:</strong> Built-in time stamping for sequence of events (SOE)</li>
+                            <li><strong>Cyclic data transmission:</strong> Periodic integrity scans for data validation</li>
+                            <li><strong>Command execution:</strong> Select-before-execute mechanism with acknowledgment</li>
+                            <li><strong>Quality descriptors:</strong> 8-bit quality flags for data validity assessment</li>
+                            <li><strong>Test mode:</strong> Built-in test frames for system diagnostics</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🎯 Applications</div>
+                        <ul class="bullet-list">
+                            <li>Distribution management systems (DMS)</li>
+                            <li>Transmission SCADA control centers</li>
+                            <li>RTU and substation gateway communication</li>
+                            <li>Renewable energy plant monitoring</li>
+                            <li>Industrial automation and process control</li>
+                            <li>Water and wastewater SCADA systems</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">⚡ Performance Characteristics</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Typical Response Times</div>
+                            <div class="detail-text">Status changes: 50-200ms; Command execution: 100-500ms; Cyclic data: 1-60 seconds configurable intervals.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Scalability</div>
+                            <div class="detail-text">Supports thousands of data points per RTU; multiple parallel connections; suitable for both small substations and large control centers.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <div class="detail-label">Cybersecurity Considerations</div>
+                        <div class="detail-text">While IEC 104 lacks native encryption, it's commonly secured using VPNs, TLS/SSL tunnels, or IEC 62351 security extensions. Firewall rules and network segmentation are essential.</div>
+                    </div>
+                    
+                    <div class="version-info">Edition 2.0 (2006) remains current; companion standard IEC 60870-5-101 covers serial communication</div>
+                </div>
+            </div>
+
+            <!-- AS/NZS 3000 -->
+            <div class="standard-card asnzs3000" onclick="toggleCard(this)">
+                <div class="standard-header">
+                    <div>
+                        <div class="standard-code">AS/NZS 3000:2018</div>
+                        <span class="standard-badge badge-asnzs">Australian/NZ</span>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="standard-title">Electrical installations (known as the Australian/New Zealand Wiring Rules)</div>
+                <div class="standard-details">
+                    <div class="section">
+                        <div class="section-title">📋 Overview</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Legal Status</div>
+                            <div class="detail-text">Mandatory standard referenced in state/territory electrical safety legislation. Compliance is legally required for all electrical work in Australia and New Zealand.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Scope of Coverage</div>
+                            <div class="detail-text">Governs design, construction, verification and operation of electrical installations up to 1000V AC (1500V DC), including consumer mains, submains, final subcircuits, and associated equipment.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🔧 Major Sections</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Section 1: Scope and Application</div>
+                            <div class="detail-text">Defines what installations are covered, exemptions (mining, railways, ships), and relationship with other standards and regulations.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Section 2: Protection & Safety</div>
+                            <ul class="bullet-list">
+                                <li>Protection against electric shock (basic & fault protection)</li>
+                                <li>RCD requirements: 30mA for socket outlets, portable equipment</li>
+                                <li>Protective earthing and equipotential bonding</li>
+                                <li>Arc fault detection devices (AFDD) for specific applications</li>
+                                <li>Surge protection device (SPD) requirements</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Section 3: Conductors & Cables</div>
+                            <ul class="bullet-list">
+                                <li>Current carrying capacity tables and derating factors</li>
+                                <li>Cable sizing for voltage drop (≤5% for submains, ≤3% lighting)</li>
+                                <li>Minimum conductor sizes (1.5mm² for power, 1.0mm² lighting)</li>
+                                <li>Color coding: Brown/Black (active), Blue (neutral), Green/Yellow (earth)</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Section 4: Switchgear & Protection</div>
+                            <div class="detail-text">Main switches, distribution boards, circuit breakers, fuses, isolation requirements, labeling and identification.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Section 5: Installation Methods</div>
+                            <div class="detail-text">Wiring systems, cable routes, conduit/trunking, support spacing, proximity to other services, underground installations.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Section 6: Special Installations</div>
+                            <ul class="bullet-list">
+                                <li>Bathrooms and wet areas (zones 0, 1, 2)</li>
+                                <li>Swimming pools and spas</li>
+                                <li>Medical locations (not operating theaters)</li>
+                                <li>Marinas and boats</li>
+                                <li>Caravans, camping sites, similar locations</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Section 7: Equipment</div>
+                            <div class="detail-text">Socket outlets, lighting, heating, motors, transformers, EV charging, battery storage systems, PV solar installations.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Section 8: Verification</div>
+                            <div class="detail-text">Inspection and testing requirements, insulation resistance (≥1MΩ), earth continuity, polarity, RCD testing (trip time ≤300ms at 30mA).</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">💡 Key Requirements</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Earthing Systems</div>
+                            <ul class="bullet-list">
+                                <li>TN-C-S (MEN system) - most common in urban areas</li>
+                                <li>TN-S - separate neutral and earth from transformer</li>
+                                <li>TT - local earth electrode, rural installations</li>
+                                <li>Main earthing conductor ≥16mm² minimum</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Circuit Protection</div>
+                            <div class="detail-text">Maximum Zs (earth fault loop impedance) values ensure disconnection within 0.4s (final circuits) or 5s (distribution). Protective device rating must coordinate with cable capacity.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🎯 Special Applications</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Solar PV Systems</div>
+                            <div class="detail-text">Requirements for DC isolators, AC/DC labeling, array installation, inverter placement, overvoltage protection, and firefighter safety (rapid shutdown).</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">EV Charging</div>
+                            <div class="detail-text">Dedicated circuits, socket outlet types (15A, 32A), hardwired EVSE requirements, load management, earthing for outdoor installations.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Battery Energy Storage</div>
+                            <div class="detail-text">Ventilation requirements, temperature monitoring, short circuit protection, isolation from grid, emergency shutdown provisions.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <div class="detail-label">2018 Amendment Highlights</div>
+                        <div class="detail-text">Introduction of AFDD requirements for certain installations, updated solar PV rules, enhanced EV charging provisions, revised bathroom zone classifications, improved surge protection guidance.</div>
+                    </div>
+                    
+                    <div class="version-info">Current edition: AS/NZS 3000:2018 (Amendment 2 - 2023); Next revision expected 2025-2026</div>
+                    
+                    <div style="margin-top: 10px;">
+                        <span class="tag">Mandatory Compliance</span>
+                        <span class="tag">Licensed Electricians</span>
+                        <span class="tag">Regulatory Standard</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AS 2067 -->
+            <div class="standard-card as2067" onclick="toggleCard(this)">
+                <div class="standard-header">
+                    <div>
+                        <div class="standard-code">AS 2067:2016</div>
+                        <span class="standard-badge badge-asnzs">Australian HV</span>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="standard-title">Substations and high voltage installations exceeding 1 kV a.c.</div>
+                <div class="standard-details">
+                    <div class="section">
+                        <div class="section-title">📋 Overview</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Scope</div>
+                            <div class="detail-text">Covers design, construction, operation and maintenance of AC substations and high voltage installations exceeding 1 kV up to and including 765 kV. Applicable to transmission, distribution, industrial and generation substations.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Voltage Classifications</div>
+                            <ul class="bullet-list">
+                                <li>Low Voltage (LV): Up to 1 kV</li>
+                                <li>High Voltage (HV): >1 kV to 66 kV</li>
+                                <li>Sub-Transmission: 66 kV to 132 kV</li>
+                                <li>Transmission: 132 kV, 220 kV, 275 kV, 330 kV, 500 kV</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🔧 Design Requirements</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Electrical Clearances</div>
+                            <div class="detail-text">Minimum phase-to-phase, phase-to-earth, and working clearances for various voltage levels. Example: 11 kV requires 150mm phase-to-earth, 22 kV requires 230mm, 66 kV requires 600mm.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Short Circuit Ratings</div>
+                            <div class="detail-text">Equipment must withstand thermal and mechanical stresses during fault conditions. Fault levels calculated per AS 60909 series. Typical distribution substation: 250-500 MVA, transmission: 3000-8000 MVA.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Earthing System Design</div>
+                            <ul class="bullet-list">
+                                <li>Earth grid/mat to limit touch and step potentials to safe levels</li>
+                                <li>Earth potential rise (EPR) calculations required for fault conditions</li>
+                                <li>Touch voltage limit: typically 75V + (1000 × ts × Cs) where ts = fault clearing time</li>
+                                <li>Step voltage considerations for outdoor yards</li>
+                                <li>Earth resistance targets: <1Ω transmission, <5Ω distribution substations</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Insulation Coordination</div>
+                            <div class="detail-text">Lightning impulse withstand, switching impulse, power frequency withstand voltages. Surge arresters rated per AS 60099 to protect equipment from overvoltages.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">💡 Physical Layout</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Substation Configurations</div>
+                            <ul class="bullet-list">
+                                <li>Single busbar - simple, lower cost, limited flexibility</li>
+                                <li>Main and transfer bus - operational flexibility</li>
+                                <li>Double busbar - high reliability, maintenance capability</li>
+                                <li>Ring bus - N-1 security, no main bus</li>
+                                <li>Breaker-and-a-half - highest reliability for critical transmission</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Safety Distances</div>
+                            <div class="detail-text">Working space: minimum 1m for 11 kV, 1.5m for 22-33 kV, 2m for 66 kV, 3m for 132 kV. Fence clearances to live parts as per voltage level. Security fencing height ≥2.4m with barbed wire.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Fire Protection</div>
+                            <div class="detail-text">Transformer oil containment (110% of largest unit), fire walls between transformers, fixed fire fighting systems for indoor substations, access for fire brigade vehicles.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🎯 Equipment Requirements</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Circuit Breakers</div>
+                            <div class="detail-text">Type selection based on fault level, voltage, current rating. Technologies: SF6 (most common), vacuum (MV), air blast (legacy). Operating mechanisms: spring, hydraulic, pneumatic. Rated per IEC 62271 series.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Isolators</div>
+                            <div class="detail-text">Provide visible isolation for maintenance. Must not break load current. Pantograph, centre-break, or vertical-break designs. Interlocking prevents operation under load.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Transformers</div>
+                            <div class="detail-text">Power transformers per AS 60076 series. Cooling types: ONAN, ONAF, OFAF, ODAF. Temperature monitoring, Buchholz relay, pressure relief, oil preservation systems. Typical ratings: 5-500 MVA for distribution.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Current & Voltage Transformers</div>
+                            <div class="detail-text">Instrument transformers per AS 60044. CT accuracy classes: 5P/10P for protection, 0.2/0.5 for metering. VT/CVT for voltage measurement and protection. Burden calculations critical for accuracy.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">⚡ Protection & Control</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Protection Philosophy</div>
+                            <ul class="bullet-list">
+                                <li>Main and backup protection required for all primary equipment</li>
+                                <li>Zone protection principles - overlapping zones</li>
+                                <li>Selectivity, sensitivity, speed, and stability requirements</li>
+                                <li>Distance protection for transmission lines</li>
+                                <li>Differential protection for transformers, busbars, generators</li>
+                                <li>Overcurrent and earth fault protection for distribution</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Control Systems</div>
+                            <div class="detail-text">SCADA integration, RTU/IED requirements, communications protocols (IEC 61850, DNP3, IEC 104). Hard-wired interlocking for critical functions. Battery systems: 110V DC or 48V DC, autonomy 2-8 hours.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Metering</div>
+                            <div class="detail-text">Revenue metering per AS 62052/62053. Real-time energy management. Power quality monitoring. Load recording and analysis.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🔒 Safety Systems</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Access Control</div>
+                            <div class="detail-text">Authorized personnel only. Lockout/tagout procedures. Permit-to-work systems for maintenance. Safety signage and hazard warnings.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Personal Protective Equipment</div>
+                            <div class="detail-text">Arc flash PPE requirements per AS/NZS IEC 61482. Arc flash hazard analysis mandatory. Incident energy levels calculated, PPE rated accordingly.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <div class="detail-label">AS 2067:2016 Key Updates</div>
+                        <div class="detail-text">Enhanced arc flash requirements, updated earthing calculations, new sections on SF6 gas management, cybersecurity considerations for digital substations, integration of IEC 61850 communication standards.</div>
+                    </div>
+                    
+                    <div class="version-info">Current edition: AS 2067:2016; Referenced standards regularly updated</div>
+                    
+                    <div style="margin-top: 10px;">
+                        <span class="tag">HV Design</span>
+                        <span class="tag">Safety Critical</span>
+                        <span class="tag">Transmission/Distribution</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AEMO -->
+            <div class="standard-card aemo" onclick="toggleCard(this)">
+                <div class="standard-header">
+                    <div>
+                        <div class="standard-code">AEMO Technical Standards</div>
+                        <span class="standard-badge badge-aemo">Market Operator</span>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="standard-title">Australian Energy Market Operator - National Electricity Market Requirements</div>
+                <div class="standard-details">
+                    <div class="section">
+                        <div class="section-title">📋 Overview</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Authority</div>
+                            <div class="detail-text">AEMO operates the National Electricity Market (NEM) covering Queensland, New South Wales, ACT, Victoria, South Australia, and Tasmania. Also operates Western Australia's Wholesale Electricity Market (WEM).</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Regulatory Framework</div>
+                            <div class="detail-text">Technical standards derive from National Electricity Rules (NER), National Electricity Law, and AEMO operating procedures. Mandatory for all registered participants.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🔧 Generator Performance Standards</div>
+                        <div class="detail-item">
+                            <div class="detail-label">S5.2.5 - Automatic Access Standards</div>
+                            <ul class="bullet-list">
+                                <li><strong>Active power control:</strong> Ramp rate ≥3% per minute of maximum capacity</li>
+                                <li><strong>Frequency response:</strong> Primary frequency response 0.5-6 seconds, droop 2-7%</li>
+                                <li><strong>Reactive power:</strong> Power factor 0.9 lagging to 0.95 leading at connection point</li>
+                                <li><strong>Voltage control:</strong> Maintain ±5% of nominal at generator terminals</li>
+                                <li><strong>Fault ride-through:</strong> Remain connected during voltage dips per specified profiles</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">S5.2.5.1 - Synchronous Generators</div>
+                            <div class="detail-text">Governor droop settings, AVR response times, short circuit ratio requirements, inertia contribution (H constant typically 3-6 seconds).</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">S5.2.5.2 - Asynchronous Generators (Wind/Solar)</div>
+                            <div class="detail-text">Fast frequency response (FFR) capability, synthetic inertia requirements, LVRT/HVRT curves, active power recovery post-fault within 1 second to 90% of pre-fault.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">💡 Grid Connection Requirements</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Connection Process</div>
+                            <ul class="bullet-list">
+                                <li>Connection enquiry and application to AEMO/TNSP</li>
+                                <li>Preliminary and detailed connection studies</li>
+                                <li>Performance standards negotiation (automatic vs. negotiated)</li>
+                                <li>Connection agreement execution</li>
+                                <li>Commissioning and compliance testing</li>
+                                <li>Registration as Market/Network participant</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">System Strength Requirements</div>
+                            <div class="detail-text">Fault level contribution assessment, minimum three-phase short circuit ratio requirements at connection point. IBR (Inverter-Based Resources) must not degrade system strength below limits.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Power Quality Standards</div>
+                            <ul class="bullet-list">
+                                <li>Harmonic limits per AS 61000.3.6 (planning levels)</li>
+                                <li>Voltage flicker: Pst ≤ 1.0, Plt ≤ 0.8</li>
+                                <li>Voltage unbalance: negative sequence ≤ 1%</li>
+                                <li>Interharmonics and supraharmonics assessment for IBR</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🎯 SCADA & Communications</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Data Provision Requirements</div>
+                            <ul class="bullet-list">
+                                <li>Real-time telemetry: MW, MVAr, voltage, frequency (4-second cycle)</li>
+                                <li>Status indications: breaker positions, alarms, plant availability</li>
+                                <li>Analog measurements: accuracy ±1% for revenue-quality data</li>
+                                <li>Forecasting data: wind/solar generation forecasts updated hourly</li>
+                                <li>Historical data: 13-month retention for market settlements</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Communication Protocols</div>
+                            <div class="detail-text">Primary: IEC 60870-5-104, DNP3, or IEC 61850. Dual redundant communications paths required. Encryption and cybersecurity per AEMO's Cyber Security Framework aligned with NIST and IEC 62351.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Control Room Integration</div>
+                            <div class="detail-text">Remote monitoring and control capability to AEMO control room. Automatic Generation Control (AGC) compliance for scheduled generators. 24/7 operator contact requirements.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">⚡ Operational Requirements</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Frequency Control</div>
+                            <ul class="bullet-list">
+                                <li>Normal operating band: 49.85 - 50.15 Hz</li>
+                                <li>FCAS (Frequency Control Ancillary Services) markets: 6-second, 60-second, 5-minute</li>
+                                <li>Contingency FCAS requirements based on largest credible contingency</li>
+                                <li>Mandatory Primary Frequency Response (PFR) from April 2023</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Network Support and Control Ancillary Services (NSCAS)</div>
+                            <div class="detail-text">Voltage control, network loading control, system restart (black start) capability for designated units. Inertia network services in low-inertia regions (SA).</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Dispatch and Bidding</div>
+                            <div class="detail-text">Five-minute dispatch interval, 30-minute trading interval. Bid submission 12:30 PM day-ahead. Dispatch conformance: follow AGC signals within ±10 MW or ±3%.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🌐 Renewable Integration Standards</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Wind Farm Requirements</div>
+                            <div class="detail-text">Wind forecasting system (AWEFS - Australian Wind Energy Forecasting System). Curtailment capability for system security. Active power control from AEMO. Wake effect modeling in connection studies.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Solar Farm Requirements</div>
+                            <div class="detail-text">Solar forecasting (ASEFS - Australian Solar Energy Forecasting System). Volt-Watt and Volt-VAr control modes. Anti-islanding protection. DC-coupled vs. AC-coupled battery storage considerations.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Battery Energy Storage Systems (BESS)</div>
+                            <ul class="bullet-list">
+                                <li>Bi-directional power capability (charge/discharge)</li>
+                                <li>Fast frequency response (FFR): 2-second activation to full output</li>
+                                <li>State of charge (SoC) management and telemetry</li>
+                                <li>Grid-forming capability for system strength contribution</li>
+                                <li>Registration as scheduled/semi-scheduled or non-scheduled unit</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">📊 Metering & Settlements</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Metering Installation Requirements</div>
+                            <div class="detail-text">Type 1-4 metering per NER Chapter 7. Type 1 (>100 MW): revenue-grade CT/VT, dual element meters, 5-minute data. Type 4 (<40 MWh/year): basic accumulation meter. SCADA cross-check within ±5%.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Market Settlement Data</div>
+                            <div class="detail-text">Metering data provision to AEMO within required timeframes. Settlements run: Preliminary (4 days), Final (28 days), Revision (13 months). Dispute resolution processes for settlement discrepancies.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <div class="detail-label">2025-2026 Focus Areas</div>
+                        <div class="detail-text">Engineering Framework for inertia and system strength, Enhanced Frequency Control Framework, Distributed Energy Resources (DER) integration standards, Offshore wind connection requirements, Hydrogen electrolyzer grid connection standards.</div>
+                    </div>
+                    
+                    <div class="version-info">Standards continuously updated via NER rule changes; check AEMO website for latest versions</div>
+                    
+                    <div style="margin-top: 10px;">
+                        <span class="tag">NEM Compliance</span>
+                        <span class="tag">Market Participation</span>
+                        <span class="tag">Grid Connection</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DNP3 -->
+            <div class="standard-card dnp3" onclick="toggleCard(this)">
+                <div class="standard-header">
+                    <div>
+                        <div class="standard-code">DNP3 Protocol</div>
+                        <span class="standard-badge badge-dnp3">IEEE 1815</span>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="standard-title">Distributed Network Protocol - SCADA and automation communication standard</div>
+                <div class="standard-details">
+                    <div class="section">
+                        <div class="section-title">📋 Overview</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Official Designation</div>
+                            <div class="detail-text">IEEE Standard 1815-2012 (formerly IEEE 1379). Open protocol developed for reliable communication between SCADA systems, RTUs, IEDs in electric utilities, water/wastewater, and other critical infrastructure.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Global Adoption</div>
+                            <div class="detail-text">Predominant protocol in North America, widely used in Australia, Asia-Pacific. Chosen for robustness over serial and IP networks, efficient bandwidth usage, and extensive event handling capabilities.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🔧 Protocol Architecture</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Three-Layer Model</div>
+                            <ul class="bullet-list">
+                                <li><strong>Application Layer:</strong> Request/response messages, unsolicited reporting, event data, file transfers</li>
+                                <li><strong>Pseudo-Transport Layer:</strong> Message fragmentation/reassembly, sequencing, error detection (CRC)</li>
+                                <li><strong>Data Link Layer:</strong> Frame structure, addressing (source/destination), master-slave or peer-to-peer modes</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Physical Layer Support</div>
+                            <div class="detail-text">RS-232, RS-485, fiber optic, Ethernet, TCP/IP (port 20000), UDP, serial over IP. Operates over diverse media from dial-up to modern IP networks.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">💡 Data Object Library</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Binary Objects</div>
+                            <ul class="bullet-list">
+                                <li>Binary Input (BI) - status monitoring, change events</li>
+                                <li>Binary Output (BO) - control points, CROB (Control Relay Output Block)</li>
+                                <li>Binary Output Status (BOS) - feedback confirmation</li>
+                                <li>Double-bit Binary Input - 4-state values (on/off/indeterminate/invalid)</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Analog Objects</div>
+                            <ul class="bullet-list">
+                                <li>Analog Input (AI) - measurements: 16/32-bit integer or floating-point</li>
+                                <li>Analog Output (AO) - setpoint control</li>
+                                <li>Analog Output Status - current setpoint feedback</li>
+                                <li>Deadband settings for efficient change reporting</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Counter Objects</div>
+                            <div class="detail-text">Accumulated totals (energy, pulses), 16/32-bit with freeze capability. Delta counter for change reporting, binary counter for absolute values.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Time Objects</div>
+                            <div class="detail-text">Time and date stamping with 1ms resolution, time synchronization messages, delay measurement for latency compensation.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">File Transfer Objects</div>
+                            <div class="detail-text">Configuration files, firmware updates, event logs, disturbance records. Supports file read, write, delete, directory operations.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🎯 Key Features</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Event-Based Reporting</div>
+                            <div class="detail-text">Unsolicited response mode - devices report changes immediately without polling. Reduces network traffic, improves response time. Class 0 (static data), Class 1 (high priority events), Class 2 (normal events), Class 3 (low priority).</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Time Synchronization</div>
+                            <div class="detail-text">Master synchronizes all outstations with absolute time. 1ms timestamp resolution, LAN/Delay measurement for propagation compensation. Critical for sequence of events analysis.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Quality Flags</div>
+                            <ul class="bullet-list">
+                                <li>ONLINE/RESTART - device status indicators</li>
+                                <li>COMM_LOST - communication failure detection</li>
+                                <li>OVER_RANGE - measurement exceeded sensor limits</li>
+                                <li>REFERENCE_ERR - calibration or reference error</li>
+                                <li>LOCAL_FORCED - manually overridden value</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Select-Before-Operate</div>
+                            <div class="detail-text">Two-step control mechanism for critical operations. SELECT command arms the output, OPERATE executes. Prevents accidental operations, provides confirmation step. Timeout prevents stale selections.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">⚡ Advanced Capabilities</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Data Set Definitions</div>
+                            <div class="detail-text">Prototype (template) and descriptor objects allow custom data groupings. Enables flexible reporting of related parameters. Dynamic dataset modification without firmware changes.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Secure Authentication (SA)</div>
+                            <div class="detail-text">DNP3 Secure Authentication (IEEE 1815.1-2015): Challenge-response authentication, HMAC-based message integrity, session key management, prevents replay attacks, man-in-the-middle, and spoofing. AES-256 encryption optional.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Device Attributes</div>
+                            <div class="detail-text">Self-description capability introduced in DNP3 SAv5. Devices report their configuration, supported objects, capabilities. Facilitates automatic discovery and configuration management.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🌐 Implementation Levels</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Subset Levels (1-4)</div>
+                            <ul class="bullet-list">
+                                <li><strong>Level 1:</strong> Basic master/outstation, binary, analog, counters</li>
+                                <li><strong>Level 2:</strong> Adds controls, time sync, frozen data</li>
+                                <li><strong>Level 3:</strong> Adds file transfer, datasets</li>
+                                <li><strong>Level 4:</strong> Full protocol implementation including all optional features</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Device Profiles</div>
+                            <div class="detail-text">XML-based Device Profile Documents specify exact implementation. Published profiles ensure interoperability. Testing labs verify conformance to profiles.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">📊 Applications</div>
+                        <div class="detail-item">
+                            <div class="detail-label">Electric Utilities</div>
+                            <ul class="bullet-list">
+                                <li>Substation automation and RTU communication</li>
+                                <li>Distribution SCADA systems</li>
+                                <li>Transmission EMS/SCADA integration</li>
+                                <li>IED data concentration</li>
+                                <li>AMI/Smart Grid backhaul</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Water/Wastewater</div>
+                            <div class="detail-text">Pump station control, reservoir level monitoring, treatment plant automation, pipeline pressure management, flow metering.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Oil & Gas</div>
+                            <div class="detail-text">Pipeline monitoring, compressor station control, custody transfer metering, leak detection systems.</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Renewable Energy</div>
+                            <div class="detail-text">Wind farm SCADA, solar plant monitoring, battery storage management, hydro plant control.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">🔒 Cybersecurity Considerations</div>
+                        <div class="detail-item">
+                            <div class="detail-label">DNP3 SAv5 Security Features</div>
+                            <ul class="bullet-list">
+                                <li>User authentication with role-based access control</li>
+                                <li>Message authentication codes (MAC) for integrity</li>
+                                <li>Challenge-response prevents replay attacks</li>
+                                <li>Aggressive mode for time-critical messages</li>
+                                <li>Key update procedures for periodic renewal</li>
+                            </ul>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Network Security Layers</div>
+                            <div class="detail-text">VPN tunneling, TLS/SSL wrappers, firewall rules for port 20000, IDS/IPS monitoring, network segmentation, compliance with NERC CIP standards.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <div class="detail-label">DNP3 vs IEC 104 vs IEC 61850</div>
+                        <div class="detail-text">DNP3 excels in reliability over poor networks, extensive event handling, North American deployment. IEC 104 common in Europe/Asia, lighter protocol. IEC 61850 offers richer data models, peer-to-peer, ideal for modern digital substations. Many systems support multiple protocols.</div>
+                    </div>
+                    
+                    <div class="version-info">Current version: IEEE 1815-2012; Secure Authentication: IEEE 1815.1-2015; Active development by DNP Users Group</div>
+                    
+                    <div style="margin-top: 10px;">
+                        <span class="tag">SCADA Protocol</span>
+                        <span class="tag">IEEE Standard</span>
+                        <span class="tag">Critical Infrastructure</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            © 2026 Comprehensive Key Standards & References Guide | For Professional Use
+        </footer>
+    </div>
+    
+    <script>
+        function toggleCard(card) {
+            const isActive = card.classList.contains('active');
+            document.querySelectorAll('.standard-card').forEach(c => c.classList.remove('active'));
+            if (!isActive) {
+                card.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
